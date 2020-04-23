@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_testchul" default="compile.module.testchul">
+  <dirname property="module.testchul.basedir" file="${ant.file.module_testchul}"/>
+  
+  <property name="module.jdk.home.testchul" value="${jdk.home.11}"/>
+  <property name="module.jdk.bin.testchul" value="${jdk.bin.11}"/>
+  <property name="module.jdk.classpath.testchul" value="jdk.classpath.11"/>
+  
+  <property name="compiler.args.testchul" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="testchul.output.dir" value="${module.testchul.basedir}/../../out/production/testchul"/>
+  <property name="testchul.testoutput.dir" value="${module.testchul.basedir}/../../out/test/testchul"/>
+  
+  <path id="testchul.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="testchul.module.production.classpath">
+    <path refid="${module.jdk.classpath.testchul}"/>
+  </path>
+  
+  <path id="testchul.runtime.production.module.classpath">
+    <pathelement location="${testchul.output.dir}"/>
+  </path>
+  
+  <path id="testchul.module.classpath">
+    <path refid="${module.jdk.classpath.testchul}"/>
+    <pathelement location="${testchul.output.dir}"/>
+  </path>
+  
+  <path id="testchul.runtime.module.classpath">
+    <pathelement location="${testchul.testoutput.dir}"/>
+    <pathelement location="${testchul.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.testchul">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.testchul">
+    <patternset refid="excluded.from.module.testchul"/>
+  </patternset>
+  
+  
+  <target name="compile.module.testchul" depends="compile.module.testchul.production,compile.module.testchul.tests" description="Compile module testchul"/>
+  
+  <target name="compile.module.testchul.production" depends="register.custom.compilers" description="Compile module testchul; production classes"/>
+  
+  <target name="compile.module.testchul.tests" depends="register.custom.compilers,compile.module.testchul.production" description="compile module testchul; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.testchul" description="cleanup module">
+    <delete dir="${testchul.output.dir}"/>
+    <delete dir="${testchul.testoutput.dir}"/>
+  </target>
+</project>
